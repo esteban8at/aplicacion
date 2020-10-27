@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Taller 3 SiGWEB</title>
+	 <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<!--Exporto SRC y librerias de JS-->
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/mdb.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="lib/leaflet-easybutton/easy-button.css" />
+  <link rel="stylesheet" href="css/style2.css">
+
+<link rel="stylesheet" href="lib/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css" />
+<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+  <script src="js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script type="text/javascript"></script>
+  <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
+  <script src="lib/leaflet/leaflet.js"></script>
+  <script src="lib/jquery/jquery-3.4.1.js"></script>
+  <script src="lib/leaflet-easybutton/easy-button.js"></script>
+  <script src="lib/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js"></script>
+  <link rel="stylesheet" href="lib/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css" />
+    <script src="lib/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.EasyButton/2.4.0/easy-button.css" />
+  <script src="lib/leaflet-heat.js"></script>
+  <link rel="stylesheet" href="betterscale/L.Control.BetterScale.css" />
+  <script src="graticule/Leaflet.Graticule.js"></script>
+    <script src="betterscale/L.Control.BetterScale.js"></script>
+    <link rel="stylesheet" href="posición/dist/L.Control.Locate.min.css" />
+  <link rel="stylesheet" href="geocodificar/l.geosearch.css" />
+    <script src="posición/src/L.Control.Locate.js" ></script>
+  <script src="geocodificar/l.control.geosearch.js"></script>
+    <script src="geocodificar/l.geosearch.provider.esri.js"></script>
+    <link rel="stylesheet" href="glass/leaflet.magnifyingglass.css" />
+    <script src="glass/leaflet.magnifyingglass.js"></script>
+  <script src="https://kit.fontawesome.com/02eb88b373.js" crossorigin="anonymous"></script>
+  <script src='migration/src/src.js'></script>
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet"/>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie-edge">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+
+</head>
+
+
+
+<body>
+
+<!--Se crean los estilos para los fondos dentro de las cajas que van en el titulo-->
+
+<style type="text/css">
+
+		.borde1{
+		background-color: #39014D;
+		width: 100%;
+		height: 100%;
+		
+	}
+</style>
+
+<style type="text/css">
+
+		.borde2{
+
+			border-style: dotted;
+
+			border-color: #39025D;
+
+		}
+</style>
+
+<style type="text/css">
+
+		.borde3{
+
+			border-style: dotted;
+
+			border-color: #00bcd4;
+
+		}
+</style>
+
+
+
+
+<!--Se crean las cajas responsive para los títulos y en dónde se pondrá en mapa y los botones-->
+
+<div class="container-fluid">
+	<div class="row">
+		 <div class=" col-xs-12 col-sm-12 col-md-3 col-lg-3 borde2"> <br><br></div>
+		 <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6 borde1 text-white  text-center">
+		 	<h4>SIG WEB</h4>  <h6>COMUNA 21</h6>
+		 </div>
+		 <div class=" col-xs-12 col-sm-12 col-md-3 col-lg-3 borde2"> <h5>
+		 	
+		 	Esteban Ochoa Torres <br>
+		 	Código: 1628759
+		 </h5></div>	
+	</div>
+</div>
+<br>
+<div class="container-fluid">
+	<div class="row">
+			<div class=" col-xs-12 col-sm-12 col-md-3 col-lg-1"></div>
+
+            <div class=" col-xs-12 col-sm-12 col-md-8 col-lg-7" id="mapid" style="width: 100%; height: 600px;"></div>
+
+            <div class=" col-xs-12 col-sm-12 col-md-3 col-lg-4  text-center">
+            	<br><br><br>
+<!--Se crean los botones que van al lado del mapa, en donde se colocará el mapa de calor, el -->
+			<button type="button" id= "limpiar" class="btn btn-outline-danger waves-effect" > &nbsp Limpiar mapa &nbsp </button> <br><br><br><br><br><br><br><br><br>
+			<button type="button" id="marca_punto" class="btn btn-outline-secondary waves-effect">marcar punto</button><br><br>
+			<button type="button" id="mapa_calor" class="btn btn-outline-secondary waves-effect"> &nbsp mapa calor &nbsp &nbsp</button><br><br>
+			<button type="button" id="marca_icono" class="btn btn-outline-secondary waves-effect">  &nbsp marca icono &nbsp</button><br><br>
+
+
+
+
+
+
+
+
+
+            	
+
+
+            </div>
+
+	</div>
+</div>	
+	
+
+
+</body>
+
+
+<!--Script para crear el mapa, el mapa de calor, y los puntos-->
+
+<script>
+
+/*  Creación de mapas base, para eso, se toman de  http://openwhatevermap.xyz/#3/38.69/240.12*/
+
+
+	var Color_Oscuro = L.tileLayer('https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png', 
+		{
+			maxZoom: 15,
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		});
+	
+	var Streets = L.tileLayer('http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.jpg', 
+		{
+			maxZoom: 18,
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		})
+
+/*  limitación de los bordes del mapa tomado de https://masquesig.com/2015/11/16/ampliando-nuestro-primer-visor-web-sobre-leaflet/*/
+
+  
+
+
+
+
+	var mymap = L.map('mapid',
+	  {
+	   		minZoom: 5,
+	        maxZoom: 15,
+	        maxBoundsViscosity: 1.0   
+	    }).setView([3.398153,-76.463795], 9).setMinZoom(14);
+  
+
+/*  Se carga el estilo de mapa que seleccionamos en el mapa base en nuestro mapa "mymap" /*/
+
+ 	Color_Oscuro.addTo(mymap);
+
+
+
+
+
+
+
+/*Se inserta el botton del zoom (control de escala) y el se añade la variable Leyenda, que es para ver las capas /*/
+
+ 	L.control.scale({position:'bottomleft'}).addTo(mymap);
+
+/* Se crean los puntos dentro de la Comuna 21*/
+
+
+
+	var geojsonFeature = [{
+
+    "type": "Feature",
+	"properties": {
+        "popupContent": "1"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.466544,3.431563]
+    }
+	}, {
+    "type": "Feature",
+    "properties": {
+        "popupContent": "2"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.46706,3.431415]
+    }
+	}, {
+    "type": "Feature",
+    "properties": {
+        "popupContent": "3"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.463595,3.430008]
+    }
+	},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "4"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.465144,3.425566]
+    }
+	},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "5"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.465954,3.430305]
+    }
+	},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "6"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.466691,3.432822]
+    }
+	},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "7"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.467281,3.434525]
+    }
+	},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "8"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [  -76.47141,3.436302]
+    }
+	},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "9"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.469715,3.41498]
+    }
+	},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "10"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [ -76.467798,3.418015]
+    }},{
+    "type": "Feature",
+    "properties": {
+        "popupContent": "11"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [  -76.464332,3.430305]
+    }}
+	];
+
+/* Se crean los estilos para cargar los puntos Geojson mediante la función OnEachFeature */
+	function onEachFeature(feature, layer) {
+    if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.popupContent);
+    }}
+
+
+  var sel_icono= $(document).ready(function () {
+    $('#demolist a').on('click', function () {
+      ($(this).text());
+    });
+  });
+
+
+
+
+var estilo1 = 
+		{
+			radius: 7,
+			fillColor: "green",
+			color: "black",
+			weight: 1,
+			opacity: 1,
+			fillOpacity: 1,
+		};
+
+	var icono = L.icon({
+				iconUrl: 'iconos/torti.png',
+				iconSize:     [37, 37],
+				iconAnchor:   [37, 27],
+				popupAnchor:  [-5,-20] 
+			});
+
+
+
+
+/* Se crean los marcadores para representar el punto Geojson en el mapa de leaflet */
+
+var marcador = L.geoJSON(geojsonFeature,{pointToLayer:function(feature, latlng) {return L.circleMarker(latlng, estilo1)},onEachFeature: onEachFeature});
+
+var marca_punto = L.geoJSON(geojsonFeature,{pointToLayer:function(feature, latlng) 
+{return L.circleMarker(latlng, estilo1)},onEachFeature: onEachFeature});
+
+var marca_icono = L.geoJSON(geojsonFeature, {pointToLayer: function (feature, latlng) 
+{return L.marker(latlng, {icon:icono })},onEachFeature: onEachFeature});	
+
+
+
+
+
+/*easy button en el mapa */
+
+
+/* Se crean los botones que van dentro del mapa de leaflet, el primero es de cargar los iconos, el segund de cargar tipo punto, y el tercero de mapa de calor*/
+
+			
+	
+	/*	
+	L.easyButton('<img src="iconos/jet.png"  align="absmiddle" height="16px" >', function() 
+		{
+		mymap.removeLayer(marca_punto);
+		marca_icono.addTo(mymap);		
+	  	}).addTo(mymap);
+
+
+	L.easyButton('<img src="iconos/jeep.png"  align="absmiddle" height="16px" >', function() 
+		{
+		mymap.removeLayer(marca_icono);
+		mymap.removeLayer(marca_punto);
+
+		marca_punto.addTo(mymap);		
+	  	}).addTo(mymap);
+
+
+console.log(marca_icono);
+	L.easyButton('<img src="iconos/heat.png"  align="absmiddle" height="16px" >', function() 
+		{	
+		mymap.removeLayer(marca_icono);
+		mymap.removeLayer(marca_punto);
+
+
+
+		var heat = L.heatLayer([[marca_icono._layers[81]._latlng.lat,marca_icono._layers[92]._latlng.lng,10]],{radius: 13}).addTo(mymap);
+		
+		for (var i = 83; i<92; i++){
+
+		heat.addLatLng([marca_icono._layers[i]._latlng.lat,marca_icono._layers[i]._latlng.lng,10],{radius: 10});
+
+		};
+		
+
+		
+	  	}).addTo(mymap); */ 
+
+
+	/* Se carga los servicios WMS de la IDESC CALI*/
+
+	var barrios = L.tileLayer.wms('http://idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
+		{
+		layers: 'idesc:mc_barrios',
+		format: 'image/png',
+		transparent: true,
+		});
+		mymap.addLayer(barrios);
+		
+	var comunas = L.tileLayer.wms('http://idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
+		{
+		layers: 'idesc:mc_comunas',
+		format: 'image/png',
+		transparent: true,
+		});
+		mymap.addLayer(comunas);
+		
+	var estaciones = L.tileLayer.wms('http://idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
+		{
+		layers: 'metrocali:sitm_estaciones',
+		format: 'image/png',
+		transparent: true,
+		});
+		mymap.addLayer(estaciones);
+
+
+
+	var centros_transito = L.tileLayer.wms('http://idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
+		{
+		layers: 'idesc:movi_centros_servicios_transito',
+		format: 'image/png',
+		transparent: true,
+		});
+		mymap.addLayer(centros_transito);
+
+	var licuacion = L.tileLayer.wms('http://idesc.cali.gov.co:8081/geoserver/wms?service=WMS&version=1.1.0',
+		{
+		layers: 'idesc:mc_susceptible_licuacion',
+		format: 'image/png',
+		transparent: true,
+		});
+		mymap.addLayer(licuacion);
+
+
+		
+	var leyenda = L.control.layers({Color_Oscuro,Streets}).addTo(mymap);
+
+
+	leyenda.addOverlay(barrios, 'Barrios');
+	leyenda.addOverlay(comunas, 'Comunas');
+	leyenda.addOverlay(estaciones, 'Estaciones mio');
+	leyenda.addOverlay(centros_transito, 'Centros Tránsito');
+	leyenda.addOverlay(licuacion, 'Zonas licuacion');
+
+/*geocodificador*/
+
+
+new L.Control.GeoSearch({provider: new L.GeoSearch.Provider.Esri()}).addTo(mymap);
+
+	
+L.control.locate().addTo(mymap);
+
+/*fin geocodificador*/
+
+
+/** zoom especial **/
+
+	L.easyButton('<img src="buscar.png"  align="absmiddle" height="16px" >', function() 
+		{
+		
+			var marcador = L.marker([3.42335,-76.52086]);
+			var magnifyingGlass = L.magnifyingGlass({
+			layers: [ marcador, Streets ]
+			});
+
+			mymap.addLayer(magnifyingGlass);
+
+	  	}).addTo(mymap);
+		
+		
+	L.control.betterscale({position:'bottomright'}).addTo(mymap);
+/** fin zoom especial **/
+
+
+/*From To*/
+    L.easyButton('<img src="iconos/icono_canal.png"  align="absmiddle" height="16px" >', function() 
+  {
+  
+    var data = [{"from":[ -76.524467,3.443957],"to":[-76.486466,3.452279],"labels":["Estación de Sucre","Puente de Alfonso López"],"color":"#00000"}];
+      
+     data = data.map(item => { return {...item, value: parseInt(100)}});
+
+     var migrationLayer = new L.migrationLayer({
+        map: mymap,
+        data: data,
+        pulseRadius:20,
+        pulseBorderWidth:3,
+        arcWidth:1,
+        arcLabel:true,
+        arcLabelFont:'15px sans-serif',
+        maxWidth:10
+        }
+    );
+    migrationLayer.addTo(mymap);
+
+  }, 'From-To').addTo(mymap);
+
+
+/*fin From To*/
+
+</script>
+
+<!--se crean las funciones de disparar accion cuando se de click en los botones declarados al inicio, el primero es limpiar mapa, el segundo es colocar puntos en el mapa
+	y el tercero es el de mapa de calor*/-->
+
+<script>
+
+	var limpiar_mapa=false;
+$( "#limpiar" ).click(function() 
+{
+	 var limpiar_mapa=true;
+		{
+		alert('Limpiando Mapa');
+		location.reload();
+		}
+	  	});	
+
+</script>
+
+<script >
+	var punto_mapa=false;
+$( "#marca_punto" ).click(function() 
+{
+	 var punto_mapa=true;
+		{
+		alert('Se mostraran los puntos');
+		mymap.removeLayer(marca_punto);
+
+		marca_punto.addTo(mymap);
+		}
+	  	});	
+
+</script>
+<script>
+	var mapa_calor=false;
+$("#mapa_calor").click(function() {
+	{	
+		alert('A continuación se muestra el mapa de calor con un radio de 13');
+
+		mymap.removeLayer(marca_punto);
+		mymap.removeLayer(marca_icono);
+
+
+		var heat = L.heatLayer([[marca_icono._layers[81]._latlng.lat,marca_icono._layers[92]._latlng.lng,10]],{radius: 13}).addTo(mymap);
+		
+		for (var i = 83; i<92; i++){
+
+		heat.addLatLng([marca_icono._layers[i]._latlng.lat,marca_icono._layers[i]._latlng.lng,10],{radius: 10});
+		
+}
+		
+	  	};
+});
+
+
+</script>
+
+<script>
+		
+	var punto_icono=false;
+$( "#marca_icono" ).click(function() 
+{
+	 var punto_icono=true;
+		{
+		alert('Se mostraran los icónos');
+		mymap.removeLayer(marca_punto);
+		marca_icono.addTo(mymap);
+		}
+	  	});	
+
+</script>
+
+</html>
